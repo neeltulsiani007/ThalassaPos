@@ -8,6 +8,7 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer , toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import logo from '../images/about.jpeg'
 
 const PlaceOrderScreen = () => {
     const [ order, setOrder ] = useState({});
@@ -15,7 +16,22 @@ const PlaceOrderScreen = () => {
     const [total ,setTotal] = useState(0)
     const [subTotal ,setSubTotal] = useState(0)
     const [deliveryFee ,setDeliveryFee] = useState(20)
+    const[rid , setRid] = useState("");
     const navigate = useNavigate()
+
+    const loadScript = (src) => {
+        return new Promise((resolve) => {
+          const script = document.createElement("script");
+          script.src = src;
+          script.onload = () => {
+            resolve(true);
+          };
+          script.onerror = () => {
+            resolve(false);
+          };
+          document.body.appendChild(script);
+        });
+      };
 
     const styles = {
         position: "top-center",
@@ -50,10 +66,74 @@ const PlaceOrderScreen = () => {
     setTotal(subTotal-p+deliveryFee)
     }
 
+    const amount = 500;
+    const currency = "INR";
+    const receiptId = "qwsaq1";
+  
+    const paymentHandler = async () => {
+
+        const res = await loadScript(
+            "https://checkout.razorpay.com/v1/checkout.js"
+         );
+    
+         if (!res) {
+            alert("Razropay failed to load!!");
+            return;
+        }
+      const response = await axios.post('http://localhost:4000/order',
+        {
+            amount:total*100,
+            currency,
+            receipt: receiptId,
+        },
+        {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true
+        }
+    );
+      const order = await response.data.order;
+      console.log(order);
+      setRid(order.id);
+  
+      var options = {
+        key: "rzp_test_tYzg6mZgcMLqab",
+        key_secret: "mBNbyL6oW4NIeyWe2pJdGJBY", // Enter the Key ID generated from the Dashboard
+        amount : total.toString(), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        currency,
+        name: "JobDekho", //your business name
+        description: "Test Transaction",
+        image: logo,
+        order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        handler:  function () {
+         generatebill();
+        },
+        prefill: {
+          //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+          name: input.name, //your customer's name
+          contact: input.number, //Provide the customer's phone number for better conversion rates
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        
+        method: {
+            upi: true
+          },
+      };
+      var rzp1 = new window.Razorpay(options);
+      rzp1.on("payment.failed", function (response) {
+        toast.error("Payment failed !",{styles})
+      });
+      rzp1.open();
+    };
+
     const generatebill = async()=>{
+
+       // await paymentHandler();
         const res = await axios.post('http://localhost:4000/generatebill',
         {
           input : input,
+          orderid:rid,
         },
         {
             headers: { 'Content-Type': 'application/json' },
@@ -84,6 +164,7 @@ const PlaceOrderScreen = () => {
     
     return (
         <main className=" h-screen bg-[url('./images/bg.avif')] ">
+            
             <div className="max-w-screen-xl py-20 mx-auto px-6">
             <ToastContainer
       position="top-center"
@@ -162,8 +243,7 @@ const PlaceOrderScreen = () => {
                                         ) : (
                                             <button className="w-full px-6 py-3 rounded-lg bg-primary text-white poppins ring-red-300 focus:ring-4 transition duration-500" 
                                             onClick={() => {
-                                                swal("Congratulations!!!", `You have order ${order.length} times successfully`, "success")
-                                                generatebill()
+                                               paymentHandler()
                                             }}>Generate bill</button>
                                         )}
 

@@ -99,7 +99,7 @@ module.exports.selectorder = async (req,res)=>{
     var request = new sql.Request();
     console.log(req.body)
     const input = req.body.input
-    const orderid = Math.floor(Math.random() * 10000000);
+    const orderid = req.body.orderid;
     const currentDate = new Date();
     const day = String(currentDate.getDate()).padStart(2, '0');
     const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // getMonth() returns 0-11
@@ -108,7 +108,7 @@ module.exports.selectorder = async (req,res)=>{
     var totalamount = 0;
     console.log(input)
     try {
-        request.input('orderid', sql.Int, orderid);
+        request.input('orderid', sql.VarChar, orderid);
         request.input('name', sql.VarChar, input.name);
         request.input('cashierid', sql.VarChar, input.cashierid);
         request.input('number', sql.Numeric, input.number);
@@ -119,7 +119,7 @@ module.exports.selectorder = async (req,res)=>{
 
         const table = new sql.Table('OrderDetail');
          table.create = false; // table already exists
-         table.columns.add('OrderID', sql.Int, { nullable: true });
+         table.columns.add('OrderID', sql.VarChar, { nullable: true });
          table.columns.add('ItemID', sql.Int, { nullable: true });
          table.columns.add('Quantity', sql.Int, { nullable: true });
          table.columns.add('SubTotal', sql.Int, { nullable: true });

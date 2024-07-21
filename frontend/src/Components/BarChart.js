@@ -9,7 +9,7 @@ const BarGraph = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const array = ['','Jan','Feb','Mar','Apr','May']
+  const array = ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
   const ref = useRef("")
 
   useEffect(() => {

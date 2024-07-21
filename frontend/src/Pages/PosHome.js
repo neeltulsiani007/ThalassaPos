@@ -256,7 +256,7 @@ function PosHome() {
             <div class="flex items-center justify-between">
                 <div>
                     <h2 class="text-lg font-semibold">Total Sales</h2>
-                    <p class="text-3xl font-bold mt-2"><span>&#8377;</span>{data.sales}</p>
+                    <p class="text-3xl font-bold mt-2"><span>&#8377;</span>{data?.sales}</p>
                 </div>
                 <div class="bg-white p-3 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-blue-500">
@@ -274,7 +274,7 @@ function PosHome() {
             <div class="flex items-center justify-between">
                 <div>
                     <h2 class="text-lg font-semibold">Total Expenses</h2>
-                    <p class="text-3xl font-bold mt-2"><span>&#8377;</span>{data.expense}</p>
+                    <p class="text-3xl font-bold mt-2"><span>&#8377;</span>{data?.expense}</p>
                 </div>
                 <div class="bg-white p-3 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-blue-500">
@@ -290,7 +290,7 @@ function PosHome() {
             <div class="flex items-center justify-between">
                 <div>
                     <h2 class="text-lg font-semibold">Number of Items</h2>
-                    <p class="text-3xl font-bold mt-2">{data.totalitems+" items"}</p>
+                    <p class="text-3xl font-bold mt-2">{data?.totalitems+" items"}</p>
                 </div>
                 <div class="bg-white p-3 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-blue-500">
@@ -307,7 +307,7 @@ function PosHome() {
             <div class="flex items-center justify-between">
                 <div>
                     <h2 class="text-lg font-semibold">Bestseller</h2>
-                    <p class="text-3xl font-bold mt-2">{data.topseller}</p>
+                    <p class="text-3xl font-bold mt-2">{data?.topseller}</p>
                 </div>
                 <div class="bg-white p-3 rounded-full">
                     <svg class="text-blue-700 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -346,10 +346,10 @@ function PosHome() {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <div className='text-2xl font-bold'>
+          <div className='text-3xl font-bold'>
           <Clock
           format={'HH:mm:ss'} ticking={true} timezone={'Asia/Calcutta'} />
-            <span class="block text-xl font-normal text-gray-500">Time</span>
+        
           </div>
         </div>
         <div class="row-span-3 bg-white shadow rounded-lg">

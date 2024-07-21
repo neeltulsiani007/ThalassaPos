@@ -16,6 +16,7 @@ import Orders from './Pages/Orders';
 import Ingredients from './Pages/Ingredients';
 import IngredientDetailScreen from './Pages/IngredientDetailScreen';
 import Expenses from './Pages/Expenses';
+import Otp from './Pages/Otp'
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
         <Route exact path='/expenses' element={<Expenses />} />
         <Route exact path='/ingredientdetail/:title' element={<IngredientDetailScreen />} />
         <Route exact path='items/:title' element={<Items />} />
+        <Route exact path='otp' element={<Otp />} />
         <Route exact path='fooditem/:title' element={<FoodDetailScreen />} />
       </Routes>
           </DeliveryProvider >

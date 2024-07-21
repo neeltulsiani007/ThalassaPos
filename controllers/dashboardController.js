@@ -1,17 +1,17 @@
 module.exports.getdata = async (req,res)=>{
-
+   
     try{
         var sql = require("mssql");
         var request = new sql.Request();
         const q1 = await request.query("SELECT SUM(SubTotal) AS TotalSubTotal FROM OrderDetail;")
-        console.log(q1.recordset[0].TotalSubTotal)
+       //console.log(q1.recordset[0].TotalSubTotal)
         const q2 = await request.query("SELECT SUM(SubTotal) AS TotalSubTotal FROM PurchaseOrderDetail;")
         console.log(q2.recordset[0].TotalSubTotal)
         const q3 = await request.query("SELECT COUNT(*) AS NumberOfItems FROM Item;")
         console.log(q3.recordset[0].NumberOfItems)
         const q4 = await request.query("SELECT TOP 1 o.ItemID, i.ItemName, SUM(o.SubTotal) AS TotalSubTotal FROM OrderDetail o INNER JOIN Item i ON o.ItemID = i.ItemID GROUP BY o.ItemID, i.ItemName ORDER BY TotalSubTotal DESC;")
-        console.log(q4.recordset[0])
-        return res.status(200).json({success: true , sales:q1.recordset[0].TotalSubTotal ,  expense : q2.recordset[0].TotalSubTotal , totalitems : q3.recordset[0].NumberOfItems , topseller : q4.recordset[0].ItemName })
+       // console.log(q4.recordset[0])
+        return res.status(200).json({success: true , sales:q1.recordset[0]?.TotalSubTotal?q1.recordset[0]?.TotalSubTotal:0 ,  expense : q2.recordset[0].TotalSubTotal , totalitems : q3.recordset[0].NumberOfItems , topseller : q4.recordset[0]?.ItemName?q4.recordset[0]?.ItemName:"none" })
     // });
  }catch(e){
     console.log(e)
