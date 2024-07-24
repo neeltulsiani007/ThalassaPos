@@ -1,1 +1,1 @@
- A full-stack restaurant Point of Sale (POS) system using React.js, Node.js, Express.js, MSSQL, and Tailwind CSS, enabling efficient order management and inventory tracking. Deployed the solution locally on localhost for seamless integration and real-time updates.
+ A full-stack restaurant Point of Sale (POS) system using React.js, Node.js, Express.js, Microsoft SQL, Azure Data Studio , Docker Desktop and Tailwind CSS, enabling efficient order management and inventory tracking. Deployed the solution locally on localhost for seamless integration and real-time updates.
